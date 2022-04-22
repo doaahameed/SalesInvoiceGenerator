@@ -29,17 +29,17 @@ public class LineDialouge extends JDialog {
         itemNameTF = new JTextField(20);
         itemPriceTF = new JTextField(20);
         itemCountTF = new JTextField(20);
-        
+
         addBtn = new JButton("Add");
         cnclBtn = new JButton("Cancel");
-        
+
         addBtn.setActionCommand("addNewLine");
         cnclBtn.setActionCommand("cancelNewLine");
-        
+
         addBtn.addActionListener(invForm.getBtnsActionListener());
         cnclBtn.addActionListener(invForm.getBtnsActionListener());
-        setLayout(new GridLayout(5,3));
-        
+        setLayout(new GridLayout(5, 3));
+
         add(nameItemtemLab);
         add(itemNameTF);
         add(priceItemLab);
@@ -48,7 +48,7 @@ public class LineDialouge extends JDialog {
         add(itemCountTF);
         add(addBtn);
         add(cnclBtn);
-        
+
         pack();
 
     }
@@ -64,6 +64,5 @@ public class LineDialouge extends JDialog {
     public JTextField getItemCountTF() {
         return itemCountTF;
     }
-    
-    
+
 }

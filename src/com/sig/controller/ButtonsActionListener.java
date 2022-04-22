@@ -1,5 +1,6 @@
 package com.sig.controller;
 
+import com.sig.model.InvHeaderTableModel;
 import com.sig.model.InvLineTableModel;
 import com.sig.model.InvoiceHeader;
 import com.sig.model.InvoiceLine;
@@ -93,6 +94,19 @@ public class ButtonsActionListener implements ActionListener {
     }
 
     private void deleteLine() {
+
+        int lineSelectedIndex = invForm.getLinesTable().getSelectedRow();
+        int invSelectIndex = invForm.getInvTable().getSelectedRow();
+        if (lineSelectedIndex != -1) {
+            invForm.getLinesArray().remove(lineSelectedIndex);
+            InvLineTableModel lineTableModel = (InvLineTableModel) invForm.getLinesTable().getModel();
+            lineTableModel.fireTableDataChanged();
+            invForm.getInvTotalLbl().setText("" + invForm.getInvoicesArray().get(invSelectIndex).getInvoiceTotal());
+            invForm.getInvHeaderTM().fireTableDataChanged();
+            invForm.getInvTable().setRowSelectionInterval(invSelectIndex, invSelectIndex);
+            System.out.println("Item Deleted Successfully");
+
+        }
     }
 
     private void additionNewInvDialouge() {
@@ -110,16 +124,28 @@ public class ButtonsActionListener implements ActionListener {
                     "Invalid Date Format", JOptionPane.ERROR_MESSAGE);
         }
 
+        System.out.println("########################");
+        System.out.println(invForm.getInvoicesArray());
         int invNumber = 0;
-        for (InvoiceHeader invHeader : invForm.getInvoicesArray()) {
-            if (invHeader.getNumber() > invNumber) {
-                invNumber = invHeader.getNumber();
+        if (invForm.getInvoicesArray() != null) {
+            for (InvoiceHeader invHeader : invForm.getInvoicesArray()) {
+                if (invHeader.getNumber() > invNumber) {
+                    invNumber = invHeader.getNumber();
+                }
+                invNumber++;
             }
-            invNumber++;
+        } else {
+            invForm.setInvoicesArray(new ArrayList<InvoiceHeader>());
+            invNumber = 0;
         }
 
         InvoiceHeader invHeader = new InvoiceHeader(invNumber, customerName, date);
         invForm.getInvoicesArray().add(invHeader);
+        if (invForm.getInvHeaderTM() == null) {
+
+            invForm.setInvHeaderTM(new InvHeaderTableModel(invForm.getInvoicesArray()));
+            invForm.getInvTable().setModel(invForm.getInvHeaderTM());
+        }
         invForm.getInvHeaderTM().fireTableDataChanged();
         System.out.println("New Invoice is added successfully");
         headerDialouge.dispose();
@@ -137,16 +163,17 @@ public class ButtonsActionListener implements ActionListener {
         String itemName = lineDialouge.getItemNameTF().getText();
         double itemPrice = 1;
         int itemCount = 1;
-        try{
-        itemPrice = Double.parseDouble(lineDialouge.getItemPriceTF().getText());
-        itemCount = Integer.parseInt(lineDialouge.getItemCountTF().getText());
-        }catch(NumberFormatException numx){
+        try {
+            itemPrice = Double.parseDouble(lineDialouge.getItemPriceTF().getText());
+            itemCount = Integer.parseInt(lineDialouge.getItemCountTF().getText());
+        } catch (NumberFormatException numx) {
             JOptionPane.showMessageDialog(invForm, "Price/count entered cannot be parsed, default value will be set to 1.",
                     "Invalid Price/count format", JOptionPane.ERROR_MESSAGE);
         }
-        
-  int invSelectedIndex = invForm.getInvTable().getSelectedRow();
+
+        int invSelectedIndex = invForm.getInvTable().getSelectedRow();
         if (invSelectedIndex != -1) {
+            System.out.println(invSelectedIndex);
             InvoiceHeader invHeader = invForm.getInvoicesArray().get(invSelectedIndex);
             InvoiceLine line = new InvoiceLine(itemName, itemPrice, itemCount, invHeader);
             invForm.getLinesArray().add(line);
@@ -154,9 +181,12 @@ public class ButtonsActionListener implements ActionListener {
             lineTableModel.fireTableDataChanged();
             invForm.getInvHeaderTM().fireTableDataChanged();
         }
-        invForm.getLinesTable().setRowSelectionInterval(invSelectedIndex, invSelectedIndex);
-        
-        
+        try {
+            invForm.getInvTable().setRowSelectionInterval(invSelectedIndex, invSelectedIndex);
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(invForm, "Please select Invoice first",
+                    "No Invoice selected", JOptionPane.ERROR_MESSAGE);
+        }
         System.out.println("New invoice item is added successfully");
         lineDialouge.dispose();
         lineDialouge = null;

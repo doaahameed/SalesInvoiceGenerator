@@ -60,5 +60,4 @@ public class InvoiceLine {
         return "InvoiceLine{" + "item=" + item + ", price=" + price + ", count=" + count + ", header=" + header + '}';
     }
 
-    
 }

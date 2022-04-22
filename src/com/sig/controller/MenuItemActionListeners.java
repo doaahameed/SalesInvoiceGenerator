@@ -63,31 +63,29 @@ public class MenuItemActionListeners implements ActionListener {
 
                 }
                 System.out.println("Uploaded files read successfully. Please view it in left side panel");
-            invForm.setInvoicesArray(invoiceHeaders);
-            
-            action = fileChooser.showOpenDialog(invForm);
-            if(action == JFileChooser.APPROVE_OPTION){
-                File selectedLineFile = fileChooser.getSelectedFile();
-                Path lineFilePath = Paths.get(selectedLineFile.getAbsolutePath());
-                List<String> fileLineLines = Files.readAllLines(lineFilePath);
-                ArrayList<InvoiceLine> invoiceLines = new ArrayList<>();
-                for (String fileLineLine : fileLineLines){
-                    String[] lineSeparator = fileLineLine.split(",");
-                    int invIdForLine = Integer.parseInt(lineSeparator[0]);
-                    String itemName = lineSeparator[1];
-                    double itemPrice = Double.parseDouble(lineSeparator[2]);
-                    int itemCount = Integer.parseInt(lineSeparator[3]);
-                    InvoiceHeader inv = invForm.getInvObject(invIdForLine);
-                    InvoiceLine invLine = new InvoiceLine(itemName, itemPrice, itemCount, inv);
-                    inv.getRelatedLines().add(invLine);
+                invForm.setInvoicesArray(invoiceHeaders);
+
+                action = fileChooser.showOpenDialog(invForm);
+                if (action == JFileChooser.APPROVE_OPTION) {
+                    File selectedLineFile = fileChooser.getSelectedFile();
+                    Path lineFilePath = Paths.get(selectedLineFile.getAbsolutePath());
+                    List<String> fileLineLines = Files.readAllLines(lineFilePath);
+                    ArrayList<InvoiceLine> invoiceLines = new ArrayList<>();
+                    for (String fileLineLine : fileLineLines) {
+                        String[] lineSeparator = fileLineLine.split(",");
+                        int invIdForLine = Integer.parseInt(lineSeparator[0]);
+                        String itemName = lineSeparator[1];
+                        double itemPrice = Double.parseDouble(lineSeparator[2]);
+                        int itemCount = Integer.parseInt(lineSeparator[3]);
+                        InvoiceHeader inv = invForm.getInvObject(invIdForLine);
+                        InvoiceLine invLine = new InvoiceLine(itemName, itemPrice, itemCount, inv);
+                        inv.getRelatedLines().add(invLine);
+                    }
                 }
-            }
-            InvHeaderTableModel invHeaderTbl = new InvHeaderTableModel(invoiceHeaders);
-            invForm.setInvHeaderTM(invHeaderTbl);
-            invForm.getInvTable().setModel(invHeaderTbl);
-            
-            
-            
+                InvHeaderTableModel invHeaderTbl = new InvHeaderTableModel(invoiceHeaders);
+                invForm.setInvHeaderTM(invHeaderTbl);
+                invForm.getInvTable().setModel(invHeaderTbl);
+
             }
         } catch (IOException e) {
             JOptionPane.showMessageDialog(invForm, e.getMessage(), "Sorry! an error has occured.", JOptionPane.ERROR_MESSAGE);

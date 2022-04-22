@@ -4,6 +4,7 @@ import com.sig.controller.ButtonsActionListener;
 import com.sig.controller.LineSelectorListener;
 import com.sig.controller.MenuItemActionListeners;
 import com.sig.model.InvHeaderTableModel;
+import com.sig.model.InvLineTableModel;
 import com.sig.model.InvoiceHeader;
 import com.sig.model.InvoiceLine;
 import java.text.SimpleDateFormat;
@@ -266,32 +267,30 @@ public class InvoiceForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem saveFileButton;
     private javax.swing.JLabel totalLbl;
     // End of variables declaration//GEN-END:variables
-   
-    public static SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyyy"); 
+
+    public static SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyyy");
     private ButtonsActionListener btnsActionListener = new ButtonsActionListener(this);
     private MenuItemActionListeners menuActionListener = new MenuItemActionListeners(this);
     private InvHeaderTableModel invHeaderTM;
+    private InvLineTableModel lineHeaderTM;
     private ArrayList<InvoiceHeader> invoicesArray;
-    private  ArrayList<InvoiceLine> linesArray;
+    private ArrayList<InvoiceLine> linesArray;
     private LineSelectorListener selectorListener = new LineSelectorListener(this);
 
     public ArrayList<InvoiceHeader> getInvoicesArray() {
         return invoicesArray;
     }
 
-    
-    
     public void setInvoicesArray(ArrayList<InvoiceHeader> invoicesArray) {
         this.invoicesArray = invoicesArray;
     }
-    
-    
-    public InvoiceHeader getInvObject(int invId){
-       for(InvoiceHeader inv : invoicesArray){
-           if(inv.getNumber()==invId){
-               return inv;
-           }
-       }
+
+    public InvoiceHeader getInvObject(int invId) {
+        for (InvoiceHeader inv : invoicesArray) {
+            if (inv.getNumber() == invId) {
+                return inv;
+            }
+        }
         return null;
     }
 
@@ -302,8 +301,6 @@ public class InvoiceForm extends javax.swing.JFrame {
     public void setLinesArray(ArrayList<InvoiceLine> linesArray) {
         this.linesArray = linesArray;
     }
-    
-    
 
     public InvHeaderTableModel getInvHeaderTM() {
         return invHeaderTM;
@@ -312,7 +309,14 @@ public class InvoiceForm extends javax.swing.JFrame {
     public void setInvHeaderTM(InvHeaderTableModel invHeaderTM) {
         this.invHeaderTM = invHeaderTM;
     }
-    
+
+    public InvLineTableModel getLineHeaderTM() {
+        return lineHeaderTM;
+    }
+
+    public void setLineHeaderTM(InvLineTableModel lineHeaderTM) {
+        this.lineHeaderTM = lineHeaderTM;
+    }
 
     public JTable getInvTable() {
         return invTable;
@@ -330,7 +334,6 @@ public class InvoiceForm extends javax.swing.JFrame {
         return invDateLbl;
     }
 
-
     public JLabel getInvNumLbl() {
         return invNumLbl;
     }
@@ -343,10 +346,4 @@ public class InvoiceForm extends javax.swing.JFrame {
         return btnsActionListener;
     }
 
-
-
-
-    
-    
-    
 }

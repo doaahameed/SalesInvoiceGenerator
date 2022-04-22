@@ -45,7 +45,7 @@ public class InvoiceHeader {
     }
 
     public ArrayList<InvoiceLine> getRelatedLines() {
-        if(relatedLines == null ){
+        if (relatedLines == null) {
             relatedLines = new ArrayList<>();
         }
         return relatedLines;
@@ -69,5 +69,4 @@ public class InvoiceHeader {
         return "InvoiceHeader{" + "number=" + number + ", customerName=" + customerName + ", invoiceDate=" + invoiceDate + '}';
     }
 
-    
 }
