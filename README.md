@@ -1,1 +1,6 @@
-# SalesInvoiceGenerator
+# SalesInvoiceGenerator SIG
+<br>This project is for a Java-based desktop application "Sales Invoice Generator" to help customers (Businesses) automatically generate and retain the history of transactions the business has.\
+The SIG app has a Menu bar that contains "File" menu, inside file menu there's "Load file" button with CTRL+L shortcut that can be used to upload any CSV file and "Save file" with CTRL+S shortcut.\
+The SIG app has a window with 2 panels, left side panel contains a table to display Invoices List that a user can upload from CSV file or can Create new invoices by himself from "Create New Invoice" button. Also user can delete any invoice displayed in this table by "Delete Invoice" button.\
+Right side panel contains a table for invoice details. When an invoice is selected from left side table, it invokes the right side panel to view the data related to the invoice selected. It shows (invoice number, date, customer name, and invoice total) in a section above the table, then the table displays invoice items (invoice number, Item name, item price, item count, and item total).\
+From the right side panel also the user can add new lines of items to be added to the total of the selected invoice and to reflect in the info section above the table and in the left side table.
